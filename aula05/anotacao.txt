@@ -1,0 +1,10 @@
+Sobre o Terminal
+
+npx create-react-app (nome do projeto) = Criar uma biblioteca
+npm start = Inicia a biblioteca do React
+
+Sobre os arquivos
+O que você vai fazer, vai estar na pasta src
+
+Configurações de Visual Code
+Emmet: Incluide Languages -----> Item = javascript --- Valor = javascriptreact -----> ok
