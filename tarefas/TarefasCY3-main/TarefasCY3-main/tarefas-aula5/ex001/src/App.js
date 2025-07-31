@@ -7,7 +7,11 @@ function App() {
   return (
     <div>
       <h1>ex001</h1>
-          <PostInstagram />
+      <Pizza />
+      <Pizza />
+      <Pizza />
+
+      <PostInstagram />
     </div>
   );
 }
