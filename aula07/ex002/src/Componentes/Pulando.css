@@ -1,0 +1,20 @@
+.fundo{
+    background-image: url('/public/imagens/neve.jpg');
+    height: 200px;
+}
+
+.jogador{
+    font-size: 100px;
+    transition: transform 0.3s;
+}
+
+.canvas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pulando{
+    transform: translateY(-70px);
+}
+
