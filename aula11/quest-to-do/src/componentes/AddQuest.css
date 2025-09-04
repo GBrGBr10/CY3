@@ -1,0 +1,41 @@
+.addquest-container {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.addquest-input {
+  border-radius: 999px;
+  background-color: #f2f2f2;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  width: 70%;
+  outline: none;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+.addquest-input:focus {
+  border-color: #999;
+}
+
+.addquest-button {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  border-radius: 999px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.addquest-button:hover {
+  background-color: #0056b3;
+}
