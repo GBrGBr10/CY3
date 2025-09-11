@@ -6,7 +6,10 @@ import "./App.css";
 function App() {
     
     const localQuests = JSON.parse(window.localStorage.getItem("quest")) || [];
-    const [quests, setQuests] = useState([localQuests]);
+    const [quests, setQuests] = useState(localQuests);
+
+    const concludedQuests = quests.filter ((quest) => quest.status === "concluído");
+    const notConcludedQuests = quests.filter ((quest) => quest.status === "aberto");
 
     //Concluded Quest
     function saveConcludedQuest(quest) {
@@ -46,7 +49,7 @@ function App() {
         getQuests();
     }
 
-    
+    //Add Quest
 
     function saveAddQuest(title){
         let auxQuests = quests;
@@ -67,20 +70,51 @@ function App() {
         getQuests();
     }
 
+    //Delete Quest
+    function saveDeleteQuest(quest) {
+        let auxQuests = quests;
+
+        const filterAuxQuests = auxQuests.filter(
+            (auxQuest) => auxQuest.id !== quest.id
+        );
+
+        localStorage.setItem("quests", JSON.stringify(filterAuxQuests));
+        getQuests();
+    }
+
+
+    //Get Quests
     function getQuests() {
         setQuests(JSON.parse(localStorage.getItem("quests")));
     }
 
+    //Navegação
     return (
         <div className="container">
             <div className="card">
+
                 <h1 className="titulo">Quests To Do</h1>
                 <AddQuest saveAddQuest={saveAddQuest} />
-                <QuestList 
-                quests={quests}
-                saveEditQuest={saveEditQuest}
-                saveConcludedQuest={saveConcludedQuest}
-                />
+
+                <div>
+                    <h2>Abertas</h2>
+                        <QuestList 
+                            quests = {notConcludedQuests}
+                            saveEditQuest = {saveEditQuest}
+                            saveConcludedQuest = {saveConcludedQuest}
+                            saveDeleteQuest={saveDeleteQuest}
+                        />
+                </div>
+
+                <div>
+                    <h2>Concluídas</h2>
+                    <QuestList 
+                        quests = {concludedQuests}
+                        saveEditQuest = {saveEditQuest}
+                        saveConcludedQuest = {saveConcludedQuest}
+                    />
+                </div>
+
             </div>
         </div>
     );

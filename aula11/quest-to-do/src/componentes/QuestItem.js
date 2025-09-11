@@ -5,8 +5,13 @@ export default function QuestItem(props) {
     const [editMode, setEditMode] = useState(false);
     const concluded = props.quest.status === "concluído"
 
+    //Navegação
     return(
-        <div>
+        <div
+            className="quest-item-container"
+            //id para teste do input
+            data-testid="questItem"
+        >
             <div>
                 <input 
                 disabled={concluded} 
@@ -14,7 +19,7 @@ export default function QuestItem(props) {
                 checked={concluded}
                 onChange={() => {
                     if (!concluded) {
-                        props.SaveConcludedQuest(props.quest);
+                        props.saveConcludedQuest(props.quest);
                     }
                 }}
                 />
@@ -27,7 +32,13 @@ export default function QuestItem(props) {
                         className="quest-input"   
                     />
                 ) : (
-                    <p className={`quest-title ${concluded ? "line through" : ""}`}>
+
+                    //parágrafo
+                    <p 
+                        className={`quest-title ${concluded ? "line through" : ""}`}
+                        //id para o teste do parágrafo
+                        data-testid="title"
+                    >
                         {props.quest.title}
                     </p>
                 )}
@@ -42,6 +53,15 @@ export default function QuestItem(props) {
                         }}
                     >
                         Editar
+                    </button>
+
+                    <button
+                        onClick={ () =>{
+                            if (concluded) return;
+                            else props.saveDeleteQuest(props.quest)
+                        }}
+                    >
+                        Excluir
                     </button>
                 </div>
 
