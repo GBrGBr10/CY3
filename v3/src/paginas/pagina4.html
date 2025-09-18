@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatBot Suporte Inteligente</title>
+  <script src="../scripts/script4.js"></script>
+  <script src="4v2"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h2 {
+      color: #b71c1c;
+      text-align: center;
+    }
+
+    .voltar-btn {
+      background-color: #f44336;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    .voltar-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: #f44336;
+      color: white;
+      border-radius: 10px 10px 0 0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab.active {
+      background-color: #b71c1c;
+    }
+
+    .chat-container {
+      border: 2px solid #f44336;
+      padding: 20px;
+      border-radius: 0 10px 10px 10px;
+      max-width: 600px;
+      width: 100%;
+      background-color: #fff5f5;
+    }
+
+    .messages {
+      min-height: 150px;
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .message {
+      margin: 5px 0;
+    }
+
+    .user {
+      color: #b71c1c;
+      font-weight: bold;
+    }
+
+    .bot {
+      color: #333;
+    }
+
+    .input-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background-color: #f44336;
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #d32f2f;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🤖 ChatBot de Suporte</h2>
+
+  <a href="../paginas/pagina2.html">🏠 Voltar ao Início </a>
+
+  <div class="tabs">
+    <div class="tab active" onclick="selectTab('inicio', event)">🏠 Início</div>
+    <div class="tab" onclick="selectTab('tecnico', event)">🔧 Suporte Técnico</div>
+    <div class="tab" onclick="selectTab('financeiro', event)">💰 Financeiro</div>
+    <div class="tab" onclick="selectTab('geral', event)">❓ Geral</div>
+    <div class="tab" onclick="selectTab('duvida', event)">📨 Enviar Dúvida</div>
+  </div>
+
+  <div class="chat-container">
+    <div class="messages" id="chat"></div>
+    <div class="input-container" id="inputArea">
+      <input type="text" id="userInput" placeholder="Digite sua pergunta..." />
+      <button onclick="enviarPergunta()">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    let abaAtual = 'inicio';
+
+    window.onload = () => {
+      mostrarInicio();
+    }
+
+    function voltarInicio() {
+      const tabInicio = document.querySelector('.tab:nth-child(1)');
+      selectTab('inicio', { target: tabInicio });
+    }
+
+    function selectTab(tabName, event) {
+      abaAtual = tabName;
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+      const chat = document.getElementById('chat');
+      const inputArea = document.getElementById('inputArea');
+
+      if (tabName === 'inicio') {
+        inputArea.classList.add('hidden');
+        mostrarInicio();
+      } else {
+        inputArea.classList.remove('hidden');
+        chat.innerHTML = '';
+      }
+    }
+
+    function mostrarInicio() {
+      const chat = document.getElementById('chat');
+      chat.innerHTML = `
+        <div class="message bot">
+          👋 Bem-vindo ao nosso sistema de atendimento virtual!<br><br>
+          Use as abas acima para escolher o tipo de suporte desejado:<br>
+          🔧 Suporte Técnico<br>
+          💰 Financeiro<br>
+          ❓ Geral<br>
+          📨 Enviar Dúvida<br><br>
+          Estamos aqui para ajudar você com rapidez e clareza!
+        </div>
+      `;
+    }
+
+    function gerarResposta(pergunta) {
+      pergunta = pergunta.toLowerCase();
+
+      if (abaAtual === 'tecnico') {
+        if (pergunta.includes('internet') || pergunta.includes('conexão')) {
+          return "Verifique seu roteador e reinicie o modem. Isso costuma resolver problemas de conexão.";
+        } else if (pergunta.includes('erro') || pergunta.includes('sistema')) {
+          return "Tente reiniciar o sistema. Se o erro persistir, envie um print para nosso suporte técnico.";
+        } else {
+          return "Descreva mais detalhes do problema técnico para que possamos ajudar melhor.";
+        }
+      }
+
+      if (abaAtual === 'financeiro') {
+        if (pergunta.includes('boleto') || pergunta.includes('pagamento')) {
+          return "Você pode emitir a 2ª via do boleto na área do cliente no nosso site.";
+        } else if (pergunta.includes('fatura') || pergunta.includes('cobrança')) {
+          return "As faturas são enviadas por e-mail. Verifique sua caixa de entrada ou spam.";
+        } else {
+          return "Para dúvidas financeiras, nos informe o número do pedido ou CPF.";
+        }
+      }
+
+      if (abaAtual === 'geral') {
+        if (pergunta.includes('horário') || pergunta.includes('atendimento')) {
+          return "Nosso atendimento funciona de segunda a sexta, das 8h às 18h.";
+        } else if (pergunta.includes('localização') || pergunta.includes('endereço')) {
+          return "Estamos localizados na Av. Central, 1234 - Centro. Visitas com agendamento.";
+        } else {
+          return "Pergunta recebida! Já estamos buscando a resposta mais adequada.";
+        }
+      }
+
+      if (abaAtual === 'duvida') {
+        return "Sua dúvida foi registrada com sucesso! Entraremos em contato em breve.";
+      }
+
+      return "Desculpe, não entendi sua pergunta.";
+    }
+
+    function enviarPergunta() {
+      const input = document.getElementById('userInput');
+      const pergunta = input.value.trim();
+      if (!pergunta) return;
+
+      const chat = document.getElementById('chat');
+      chat.innerHTML += `<div class="message user">Você: ${pergunta}</div>`;
+      input.value = "";
+
+      setTimeout(() => {
+        const resposta = gerarResposta(pergunta);
+        chat.innerHTML += `<div class="message bot">Bot: ${resposta}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+      }, 600);
+    }
+  </script>
+
+    <script>
+    let abaAtua = 'inicio';
+  
+    window.onload = () => {
+      mostrarInicio();
+    }
+  
+    function voltarInicio() {
+      const tabInicio = document.querySelector('.tab:nth-child(1)');
+      selectTab('inicio', { target: tabInicio });
+    }
+  
+    function selectTab(tabName, event) {
+      abaAtual = tabName;
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      event.target.classList.add('active');
+      const chat = document.getElementById('chat');
+      const inputArea = document.getElementById('inputArea');
+  
+      if (tabName === 'inicio') {
+        inputArea.classList.add('hidden');
+        mostrarInicio();
+      } else {
+        inputArea.classList.remove('hidden');
+        chat.innerHTML = '';
+      }
+    }
+  
+    function mostrarInicio() {
+      const chat = document.getElementById('chat');
+      chat.innerHTML = `
+        <div class="message bot">
+          👋 Bem-vindo ao nosso sistema de atendimento virtual!<br><br>
+          Use as abas acima para escolher o tipo de suporte desejado:<br>
+          🔧 Suporte Técnico<br>
+          💰 Financeiro<br>
+          ❓ Geral<br>
+          📨 Enviar Dúvida<br><br>
+          Estamos aqui para ajudar você com rapidez e clareza!
+        </div>
+        <br>
+        <div style="text-align: center;">
+          <h3>🎮 Destaques Nintendo</h3>
+          <img src="../imagens/nintendo1.jpeg" alt="Mario Odyssey" width="150" style="margin: 10px;">
+        </div>
+      `;
+    }
+  
+    function gerarResposta(pergunta) {
+      // ... (mantém a função gerarResposta original)
+    }
+  
+    function enviarPergunta() {
+      // ... (mantém a função enviarPergunta original)
+    }
+  </script>
+
+
+</body>
+</html>

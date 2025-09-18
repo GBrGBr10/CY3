@@ -1,0 +1,77 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eee7ee;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #e60012;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .botaoVoltar {
+    background-color: #e60012; /* Cor de fundo verde */
+  color: white;  
+  }
+
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 60%;
+  }
+  
+  .movie {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .movie img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .cart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    margin-left: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  button {
+    background-color: #e60012;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #c4000f;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+

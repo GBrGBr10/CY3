@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nintendo Filmes Store</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #eee7ee;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #e60012;
+    color: white;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .botaoVoltar {
+    background-color: #e60012; /* Cor de fundo verde */
+  color: white;  
+  }
+
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 60%;
+  }
+  
+  .movie {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  .movie img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .cart {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    margin-left: 20px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  
+  button {
+    background-color: #e60012;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #c4000f;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <h1 class="botaoVoltar"><button onclick="window.history.back()" class="back-button">Voltar</button></h1>
+    <h2>Nintendo Filmes Store</h1>
+    <h2>by: Be In Your Dreams and Nintendo</h2>
+  </header>
+
+  <main>
+    <section class="movies">
+      <div class="movie" data-id="1" data-title="Super Mario Bros" data-price="29.90">
+        <img src="../imagens/pagina3_img/nintendo_movie_1.jpg" alt="Super Mario Bros">
+        <h2>Super Mario Bros</h2>
+        <p>R$ 99,99</p>
+        <button onclick="addToCart(1)">Adicionar ao Carrinho</button>
+      </div>
+
+      <div class="movie" data-id="2" data-title="The Legend of Zelda" data-price="34.90">
+        <img src="../imagens/pagina3_img/nintendo_movie_2.jpg" alt="The Legend of Zelda">
+        <h2>The Legend of Zelda</h2>
+        <p>R$ 109,99</p>
+        <button onclick="addToCart(2)">Adicionar ao Carrinho</button>
+      </div>
+
+      <div class="movie" data-id="3" data-title="Pokémon: Detetive Pikachu" data-price="27.50">
+        <img src="../imagens/pagina3_img/nintendo_movie_4.jpg" alt="Detetive Pikachu">
+        <h2>Detetive Pikachu</h2>
+        <p>R$ 89,99</p>
+        <button onclick="addToCart(3)">Adicionar ao Carrinho</button>
+      </div>
+    </section>
+
+    <section class="cart">
+      <h2>Carrinho🛒</h2>
+      <ul id="cart-list"></ul>
+      <p>Total: R$ <span id="total">0.00</span></p>
+
+      <input type="text" id="coupon" placeholder="Cupom de Desconto">
+      <button onclick="applyCoupon()">Aplicar Cupom</button>
+
+      <p>Com Desconto: R$ <span id="discounted-total">0.00</span></p>
+
+      <button onclick="checkout()">Finalizar Compra</button>
+
+      <p>CUPONS:
+        <p>> MARIO10 - 10% DE DESCONTO</p>
+        <p>> NINTENDO10 - 10% DE DESCONTO</p>
+        <p>> CTRLPLAY5 - 10% DE DESCONTO</p>
+        </h1> • Os descontos não somam!! (Porque a Nintendo não quer)</h1>
+      </p>
+
+    </section>
+  </main>
+
+  <script>
+    const movies = {
+    1: { title: "Super Mario Bros", price: 99.99 },
+    2: { title: "The Legend of Zelda", price: 109.99 },
+    3: { title: "Detetive Pikachu", price: 89.99 }
+  };
+  
+  let cart = [];
+  let discount = 0;
+  
+  function addToCart(id) {
+    cart.push(movies[id]);
+    updateCart();
+  }
+  
+  function updateCart() {
+    const list = document.getElementById("cart-list");
+    const total = document.getElementById("total");
+    const discountedTotal = document.getElementById("discounted-total");
+  
+    list.innerHTML = "";
+    let totalValue = 0;
+  
+    cart.forEach((item, index) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.title} - R$ ${item.price.toFixed(2)}`;
+      list.appendChild(li);
+      totalValue += item.price;
+    });
+  
+    total.textContent = totalValue.toFixed(2);
+    discountedTotal.textContent = (totalValue * (1 - discount)).toFixed(2);
+  }
+  
+  function applyCoupon() {
+    const couponInput = document.getElementById("coupon").value.trim().toUpperCase();
+  
+    const validCoupons = {
+      "NINTENDO10": 0.10,
+      "MARIO10": 0.10,
+      "CTRLPLAY10": 0.10
+    };
+  
+    if (validCoupons[couponInput]) {
+      discount = validCoupons[couponInput];
+      alert(`Cupom aplicado: ${discount * 100}% de desconto!`);
+    } else {
+      discount = 0;
+      alert("Cupom inválido.");
+    }
+  
+    updateCart();
+  }
+  
+  function checkout() {
+    if (cart.length === 0) {
+      alert("Seu carrinho está vazio.");
+      return;
+    }
+  
+    const finalPrice = cart.reduce((sum, item) => sum + item.price, 0) * (1 - discount);
+    alert(`Compra finalizada! Total: R$ ${finalPrice.toFixed(2)}`);
+    cart = [];
+    discount = 0;
+    document.getElementById("coupon").value = "";
+    updateCart()}
+
+    // Captura o botão pelo ID
+const botaoVoltar = document.getElementById('botaoVoltar');
+
+// Adiciona o evento de clique no botão
+botaoVoltar.addEventListener('click', function() {
+  // Volta à página anterior do histórico
+  window.history.back();
+});
+  </script>
+</body>
+</html>
