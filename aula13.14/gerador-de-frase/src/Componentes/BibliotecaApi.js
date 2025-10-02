@@ -9,7 +9,7 @@ function BibliotecaApi () {
 
         try{
             const resposta = await axios.get(`https://openlibrary.org/search.json?q=${book}`);
-            setInfo(resposta.data.docs);
+            setInfo(resposta.data.docs.slice(0,10));
         }
 
         catch(error) {
@@ -27,8 +27,12 @@ function BibliotecaApi () {
                 value={book}
                 onChange={(evento) => setBook(evento.target.value)}
                 />
-                <button onClick={buscarBibliotecaApi}>Buscar</button>
+
+                <button 
+                onClick={buscarBibliotecaApi}
+                >Buscar</button>
             </div>
+            
 
             <div>
                 {info[2] ? (<p>{info[4].title}</p>) : (<p>Nenhum Resultado</p>)}
