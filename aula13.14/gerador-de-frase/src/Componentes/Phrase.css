@@ -1,0 +1,11 @@
+.phrase-texto {
+    font-size: 18px;
+    color: #262626; /* neutral-800 */
+}
+
+.phrase-autor {
+    text-decoration: underline;
+    text-decoration-color: #0ea5e9; /* sky-500 */
+    font-style: italic;
+    color: #404040;
+}
