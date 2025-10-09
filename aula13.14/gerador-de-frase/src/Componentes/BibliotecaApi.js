@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import './BibliotecaApi.css';
 
 function BibliotecaApi () {
     const [book, setBook] = useState('');
@@ -13,14 +14,14 @@ function BibliotecaApi () {
         }
 
         catch(error) {
-            console.log('Erro ao buscar livro', error);
+            console.log('Error when searching for book', error);
             setInfo([]);
         }
     }
 
     return(
         <div>
-            <h1>Biblioteca Open Source</h1>
+            <h1>LibraryOpen Source</h1>
             <div>
                 <input 
                 type="text"
@@ -30,29 +31,31 @@ function BibliotecaApi () {
 
                 <button 
                 onClick={buscarBibliotecaApi}
-                >Buscar</button>
+                >Search</button>
             </div>
             
 
             <div>
-                {info[2] ? (<p>{info[4].title}</p>) : (<p>Nenhum Resultado</p>)}
+                {info.length ? (<p>{info[0].title}</p>) : (<p>Nenhum Resultado</p>)}
             </div>
 
             <div>
                 {info.map( (book, index) => {
-                    <div key={index} >
+                    return(
+                        <div key={index} >
 
                         {book.cover_i ? (
                             <img 
-                            src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                            alt="" 
+                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                                alt="" 
                             />
-                         ) : ( 
-                         <div>Sem capa</div> 
-                         )}
-
+                            ) : ( 
+                            <div>No cover</div> 
+                            )}
                         <h3>{book.title}</h3>
-                    </div>
+                        </div>
+                    )
+                    
                 } )}
             </div>
 

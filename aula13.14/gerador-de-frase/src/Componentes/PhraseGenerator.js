@@ -16,7 +16,7 @@ function PhraseGenerator() {
     const getRandomPhrase = async () => {
         try{
             setLoading(true);
-            const response = await axios.get("https://openlibrary.org/search.json");
+            const response = await axios.get("http://api.quotable.io/random");
             const data = response.data;
             setPhrase({conteudo:data.content, autor: data.author})
         } catch (error) {

@@ -1,0 +1,19 @@
+{
+    "frases": [
+        {
+            "id": 1,
+            "frase": "Se a vida te der limões, faça uma limonada.",        
+            "autor": "Pedrinho"
+        },
+        {
+            "id": 2,
+            "frase": "Eu ia dominar o mundo, mas acordei atrasado.",
+            "autor": "Zezinho"
+        },
+        {
+            "id": 3,
+            "frase": "Dizem que o dinheiro não traz felicidade, mas prefiro chorar numa iate.",
+            "autor": "Luizinho"
+        }
+    ]
+}
