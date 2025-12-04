@@ -24,7 +24,7 @@ function GuildForm(props) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        addGuild();
+        addGuild(guild);
     }
 
     return (

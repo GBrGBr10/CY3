@@ -5,8 +5,28 @@ import { useEffect, useState } from "react";
 function MemberForm(props) {
 
     const {memberId} = useParams();
-    const [members, setMembers] = useState();
+    const [member, setMember] = useState();
     const [guilds, setGuilds] = useState([]);
+    const addMember = async ({name, guildId}) => {
+        const created = {
+            name,
+            guildId,
+        };
+
+        try {
+            const response = await requester.post('/members', created);
+            props.updateMembers?.(response.data);
+
+        } catch(error) {
+            console.log('Erro ao adicionar membros', error);
+        };
+    }
+     
+    const onSubmit = (e) => {
+        e.preventDefault();
+        addMember(member);
+    }
+
 
     useEffect( () => {
         const getGuilds = async () => {
@@ -22,8 +42,42 @@ function MemberForm(props) {
 
     return(
         <div>
-            <form>Membros {memberId} </form>
+            <form> 
+                <div>
+                    <label>Membro</label>
+                    <input 
+                    role="input"
+                    name="name"
+                    type="text"
+                    defaultValue={member?.name}
+                    onChange={(e) => 
+                        setMember((prev) => ({...prev, name:e.target.value}))
+                    } />
+                </div>
+
+                <div>
+                    <label>Guilda</label>
+                    <select
+                    role="select"
+                    value={member?.guildId ?? 0}
+                    name = "guild"
+                    placeholder="Guilda"
+                    onChange={(e) => 
+                        setMember((prev) => ({...prev, guildId: e.target.value}))
+                    }
+                    >
+                        <option value="" />
+                        {guilds.map((guild) => (
+                            <option key={guild.id} value={guild.id}>
+                                {guild.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <button type="submit">Confirmar</button>
+            </form>
         </div>
+        
     )
 }
 
