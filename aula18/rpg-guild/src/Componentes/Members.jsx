@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import MemberForm from "./MemberForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import requester from "../axios";
 
 function Members() {
@@ -11,7 +11,7 @@ function Members() {
     const deleteMember = async ({id}) => {
         try {
             await requester.delete(`/members/${id}`);
-            setMember(members.filter( (member) => {
+            setMembers(members.filter( (member) => {
                 member.id !== id;
             }))
         } catch (error) {
@@ -22,16 +22,15 @@ function Members() {
     useEffect( () => {
         const getMember = async () => {
             try {
-                const response = await requester.get(`/members/${memberId}`);
-                setMember(response.data)
+                const response = await requester.get("/members");
+                setMembers(response.data)
             } catch (error) {
                 console.log("Erro ao buscar os membros", error);
             };
         };
-        if (memberId) {
-            getMember();
-        };
-     }, [memberId] );
+
+
+     }, [] );
 
     return(
         <div>

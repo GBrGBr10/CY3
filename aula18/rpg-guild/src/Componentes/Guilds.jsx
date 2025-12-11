@@ -18,7 +18,20 @@ function Guilds() {
         } catch (error) {
             console.log('Erro ao deletar guilda', error);
         };
-    }
+    };
+
+    useEffect( () => {
+        const getGuilds = async () => {
+            try{
+                const response = await requester.get("/guilds");
+                setGuilds(response.data);
+            } catch (error) {
+                console.log("Erro ao buscar as guildas: ", error)
+            };
+        };
+
+        getGuilds();
+    }, [] );
 
     return(
         <div>

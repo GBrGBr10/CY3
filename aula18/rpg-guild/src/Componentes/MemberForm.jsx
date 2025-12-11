@@ -19,7 +19,7 @@ function MemberForm(props) {
         try {
             const response = await requester.post("/members", created);
             setMember(response?.data);
-            props.UpdateMembers?.(response.data)
+            props.updateMembers?.(response.data)
         } catch (error) {
             console.log("Erro ao adicionar membro", error);
         };
@@ -59,6 +59,18 @@ function MemberForm(props) {
             getMember();
         };
      }, [memberId] );
+
+     useEffect( () => {
+        const getGuilds = async () => {
+            try {
+                const response = await requester.get("/guilds");
+                setGuilds(response.data)
+            } catch (error) {
+                console.log("Erro ao buscar os membros", error);
+            };
+        };
+        getGuilds();
+     }, [] );
 
     return(
         <div>
